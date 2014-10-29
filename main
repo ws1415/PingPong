@@ -1,0 +1,54 @@
+color cBackground = color(0,0,0); //Die Farbe Schwarz wird definiert
+
+float posX, posY; //Deklaration X,Y Ball
+float velX, velY; //Deklaration Geschwindigkeit X,Y Ball
+
+int rectY; //Deklaration Rechteck Y 
+
+//Wird beim Start der Anwendung ausgeführt
+void setup(){
+  size(800,600); //Fenstergröße
+  
+  posX = random(0+20,width-20); //Position X Ball
+  posY = random(0+20,height-20); //Position Y Ball
+  
+  velX = 8; // Geschwidigkeit X
+  velY = 8; // Geschwidigkeit Y
+}
+
+//Wird 60 mal in der Sekunde ausgeführt
+void draw(){
+  background(cBackground); //Fensterhintergrund Farbe
+  
+  posX = posX + velX; // Position Ball X wird verändert
+  posY = posY + velY;  // Position Ball Y wird verändert
+  
+  ellipse(posX,posY,20,20); //Kreis
+  
+  // Rechte Seite reflexion
+  if(posX > width){
+     velX = velX * -1;
+  }
+  
+  //Obere und Untere Seite reflexion
+  if(posY < 0 || posY > height){
+    velY = velY * -1;
+  }
+  
+  rectY = mouseY-50; // Der Mauszeiger ist genau in der Mitte des Rechtecks Y Koordinate
+  rect(10,rectY,20,100); // Rechteck wird gezeichnet 
+  
+  // Wenn der Ball die linke Seite berührt, dann hat man verloren
+   if(posX < 0) {
+      posX=400;
+        posY=300;
+        println("verloren");
+   }
+
+  // Wenn der Ball bei X = 30 und in dem Bereich des rect Objektes ist...wird der Ball zurück gespielt
+    if(posX <= 30 && rectY <= posY && rectY + 100 >= posY){
+        velX=velX*-1; // Die Richtung ändert sich
+        println("hit");
+       }
+     
+}
